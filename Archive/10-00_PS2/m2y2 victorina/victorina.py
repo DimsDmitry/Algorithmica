@@ -23,7 +23,7 @@ main_win.resize(400, 200)
 '''создаём виджеты'''
 question = QLabel('Какого айфона не существует?')
 btn_answer1 = QRadioButton('Iphone 2g')
-btn_answer2 = QRadioButton('Iphone 14')
+btn_answer2 = QRadioButton('Iphone 14Линейная регрессия')
 btn_answer3 = QRadioButton('Iphone 9')
 btn_answer4 = QRadioButton('Iphone XS')
 
