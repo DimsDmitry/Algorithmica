@@ -14,6 +14,7 @@ my_dict = {
 
 # del my_dict['Пушкин']
 print(my_dict['Пушкин'][1])
+print(my_dict['Историки']['Уткин'][1])
 
 user = {
     'login': 'dima123',
@@ -21,3 +22,4 @@ user = {
     'telephone': 88005553535,
     'cod_word': 'тузик'
 }
+
