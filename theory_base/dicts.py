@@ -13,7 +13,7 @@ my_dict = {
 }
 
 # del my_dict['Пушкин']
-print(my_dict['Пушкин'][1])
+print(my_dict['Пушкин'][0])
 print(my_dict['Историки']['Уткин'][1])
 
 user = {
