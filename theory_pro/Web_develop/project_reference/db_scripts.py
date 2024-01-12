@@ -77,7 +77,7 @@ def show_tables():
 def add_questions():
     questions = [
         ('Сколько месяцев в году имеют 28 дней?', 'Все', 'Один', 'Ни одного', 'Два'),
-        ('Каким станет зелёный утёс, если упадет в Красное море?', 'Мокрым?', 'Красным', 'Не изменится', 'Фиолетовым'),
+        ('Каким станет зеленый утес, если упадет в Красное море?', 'Мокрым?', 'Красным', 'Не изменится', 'Фиолетовым'),
         ('Какой рукой лучше размешивать чай?', 'Ложкой', 'Правой', 'Левой', 'Любой'),
         ('Что не имеет длины, глубины, ширины, высоты, а можно измерить?', 'Время', 'Глупость', 'Море', 'Воздух'),
         ('Когда сетью можно вытянуть воду?', 'Когда вода замерзла', 'Когда нет рыбы', 'Когда уплыла золотая рыбка',
@@ -120,7 +120,7 @@ def add_links():
 
 def get_question_after(last_id=0, vict_id=1):
     ''' возвращает следующий вопрос после вопроса с переданным id
-    для первого вопроса передаётся значение по умолчанию '''
+    для первого вопроса передается значение по умолчанию '''
     open()
     query = '''
     SELECT quiz_content.id, question.question, question.answer, question.wrong1, question.wrong2, question.wrong3
@@ -136,7 +136,7 @@ def get_question_after(last_id=0, vict_id=1):
 
 
 def get_quises():
-    ''' возвращает список викторин (id, name)
+    ''' возвращает список викторин (id, name) 
     можно брать только викторины, в которых есть вопросы, но пока простой вариант '''
     query = 'SELECT * FROM quiz ORDER BY id'
     open()
@@ -144,6 +144,28 @@ def get_quises():
     result = cursor.fetchall()
     close()
     return result
+
+
+def check_answer(q_id, ans_text):
+    query = '''
+            SELECT question.answer 
+            FROM quiz_content, question 
+            WHERE quiz_content.id = ? 
+            AND quiz_content.question_id = question.id
+        '''
+    open()
+    cursor.execute(query, str(q_id))
+    result = cursor.fetchone()
+    close()
+    # print(result)
+    if result is None:
+        return False  # не нашли
+    else:
+        if result[0] == ans_text:
+            # print(ans_text)
+            return True  # ответ совпал
+        else:
+            return False  # нашли, но ответ не совпал
 
 
 def get_quiz_count():
