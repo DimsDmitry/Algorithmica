@@ -178,7 +178,7 @@ def main():
     # print(get_question_after(0, 3))
     # print(get_quiz_count())
     # print(get_random_quiz_id())
-    pass
+
 
 
 if __name__ == "__main__":
