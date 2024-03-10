@@ -1,12 +1,11 @@
 list1 = [1, 2, 3, 4, 5, 'string', [10, 14, 16]]
 list2 = [22, 23, 24]
 
-
-list1.append(12)
+list1.append(12)  # добавление в конец списка
 print(list1)
 list1.insert(2, 9)
 # нежелательно складывать списки с помощью + :
-print(list1+list2)
+print(list1 + list2)
 # лучше использовать:
 list1.extend(list2)
 print(list1)
@@ -27,8 +26,6 @@ print(list1)
 # срез
 
 list2 = ['text', 'hello', 4, 2, 10, 15]
-print(list2[:3]) # от 0 до 3
-print(list2[3:]) # от 3 до конца
-print(list2[1:5:2]) # от 1 до 5 с шагом 2
-
-
+print(list2[:3])  # от 0 до 3
+print(list2[3:])  # от 3 до конца
+print(list2[1:5:2])  # от 1 до 5 с шагом 2
