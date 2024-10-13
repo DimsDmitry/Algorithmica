@@ -1,9 +1,9 @@
-# start = 2
-# stop = 15
-# step = 3
-#
-# for i in range(start, stop, step):
-#     print(i)
+start = 2
+stop = 15
+step = 3
+
+for i in range(start, stop, step):
+    print(i)
 
 
 string = 'Я гулял на море, мимо проплывали корабли, солнце садилось'
