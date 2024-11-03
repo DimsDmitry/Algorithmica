@@ -15,9 +15,12 @@ my_dict = {
 # del my_dict['Пушкин']
 print(my_dict['Пушкин'][0])
 print(my_dict['Историки']['Уткин'][1])
+# добавить пару ключ-значение:
+my_dict['Достоевский'] = 'Преступление и наказание'
+print(my_dict)
 
 user = {
-    (123, 242): 'dima123',
+    'login': 'dima123',
     'password': 'qwerty',
     'telephone': 88005553535,
     'cod_word': 'тузик'
