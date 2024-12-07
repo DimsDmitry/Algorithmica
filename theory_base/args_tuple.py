@@ -1,4 +1,6 @@
 def multiply(*args):
+    print(type(args))
+    print(args)  # все аргументы помещаются в tuple - кортеж
     mul = 1
     for num in args:
         mul *= num
