@@ -7,15 +7,15 @@ df = pd.read_csv('GoogleApps.csv')
 size_sorted = df.sort_values('Size', ascending=False)[['App', 'Size']]
 print(size_sorted)
 
-print(100*'=')
+print(100 * '=')
 
-print(df.groupby(['Size'])['Price'].mean()) # Вывести среднюю цену Price для разных размеров приложений Size
+print(df.groupby(['Size'])['Price'].mean())  # Вывести среднюю цену Price для разных размеров приложений Size
 
-print(100*'*')
+print(100 * '*')
 
-print(df.groupby(['Size'])['Price'].agg(['mean', 'min', 'max'])) # agg() - агрегатор. Применяет несколько функций
+print(df.groupby(['Size'])['Price'].agg(['mean', 'min', 'max']))  # agg() - агрегатор. Применяет несколько функций
 
-print(100*'#')
+print(100 * '#')
 
 # Сгруппировать данные по категории ('Category') и целевой аудитории ('Content Rating'),
 # посчитать максимальное количество отзывов ('Reviews') в каждой группе.

@@ -1,3 +1,5 @@
+# Функция с переменным количеством аргументов!
+
 def multiply(*args):
     print(type(args))
     print(args)  # все аргументы помещаются в tuple - кортеж
