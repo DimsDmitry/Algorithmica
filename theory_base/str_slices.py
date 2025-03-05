@@ -12,3 +12,9 @@ print(result)
 
 result = text[2:10]  # с 2 до 10 символа не включительно
 print(result)
+
+result = text[2:10:2]  # с 2 до 10 символа не включительно, С ШАГОМ 2
+print(result)
+
+
+
