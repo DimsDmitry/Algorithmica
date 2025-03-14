@@ -1,3 +1,3 @@
-text = 'Всем привет, я Дима'
-text = text.replace(' ', '')
-print(text)
+answer = input('да/нет').lower()
+
+print(answer == 'да')

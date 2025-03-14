@@ -1,5 +1,6 @@
 from random import *
 # получение рандомного элемента из списка
+
 # СПОСОБ 1 - через randint
 color_list = 'cyan red blue black orange green lightblue bisque purple yellow lime magenta'.split()
 print(color_list)
@@ -9,7 +10,7 @@ rand_color = color_list[rand_digit]
 print(rand_color)
 
 # СПОСОБ 2 - через shuffle
-color_list = 'cyan red blue black orange green lightblue busquit purple yellow lime magenta'.split()
+color_list = 'cyan red blue black orange green lightblue bisque purple yellow lime magenta'.split()
 shuffle(color_list)
 print(color_list[0])
 print(color_list)
