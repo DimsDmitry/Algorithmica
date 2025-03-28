@@ -27,4 +27,17 @@ user = {
 }
 
 print(user)
+print('\n' + 100 * "#" + '\n')
+# вывести все ключи
+for elem in my_dict:
+    print(elem)
+print('\n' + 100 * "#" + '\n')
+# вывести все значения
+for elem in my_dict:
+    print(my_dict[elem])
 
+print('\n' + 100 * "#" + '\n')
+# аналогичные методы:
+print(my_dict.keys())
+print('\n' + 100 * "#" + '\n')
+print(my_dict.values())
