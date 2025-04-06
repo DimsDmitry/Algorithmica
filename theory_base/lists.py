@@ -1,6 +1,7 @@
 list1 = [1, 2, 3, 4, 5, 'string', [10, 14, 16]]
 list2 = [22, 23, 24]
 list3 = list()
+list3 = []
 surnames = 'Иванов Петров Соколова Иванова'.split()  # создание списка из строки
 print(surnames)
 
