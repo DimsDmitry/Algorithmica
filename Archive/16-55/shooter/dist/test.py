@@ -1,71 +1,72 @@
-#Создай собственный Шутер!
 from pygame import *
-from random import randint
-
+from random import *
 from time import time as timer
 
-
-'''создаём окно'''
 win_width = 700
 win_height = 500
-display.set_caption('Космическая баталия')
+display.set_caption('БИТВА ВСЕЛЕННОЙ!!!!!')
 window = display.set_mode((win_width, win_height))
 background = transform.scale(image.load('galaxy.jpg'), (win_width, win_height))
 
-
-'''фоновая музыка'''
+'''music'''
 mixer.init()
-mixer.music.load('space.ogg')
+mixer.music.load('x2downloadapp-insight-320-kbps_SDGrHYXh.mp3')
 mixer.music.play()
 fire_sound = mixer.Sound('fire.ogg')
 
-'''шрифты и надписи'''
+'''fonts'''
 font.init()
-font1 = font.SysFont('Arial', 80)
-win = font1.render('ПОБЕДА', True, (255, 255, 255))
-lose = font1.render('ПОРАЖЕНИЕ', True, (180, 0, 0))
-font2 = font.SysFont('Arial', 36)
+font1 = font.Font(None, 80)
+win = font1.render('WIN', True, (255, 255, 255))
+lose = font1.render('Lose', True, (255, 255, 255))
+font2 = font.Font(None, 36)
 
-score = 0  # сбито кораблей
-lost = 0  # пропущено кораблей
-max_lost = 3  # проиграли, если пропустили столько кораблей
-goal = 30  # столько кораблей нужно сбить для победы
-life = 3  # здоровье
+'''Game'''
+score = 0  # ships killed
+lost = 0  # ships missed
+max_lost = 3  # lost when missed 3 ships
+goal = 30  # ships need to kill to win
+life = 3  # health
 
 
 class GameSprite(sprite.Sprite):
-    '''класс-родитель для других спрайтов'''
+    '''the parent of other sprites'''
+
     def __init__(self, player_image, player_x, player_y, size_x, size_y, player_speed):
         sprite.Sprite.__init__(self)
-        '''каждый спрайт хранит изображение'''
+        '''every sprite keeps an image'''
         self.image = transform.scale(image.load(player_image), (size_x, size_y))
         self.speed = player_speed
-        '''каждый спрайт - прямоугольник rectangle'''
+        '''every sprite is a rectangle'''
         self.rect = self.image.get_rect()
         self.rect.x = player_x
         self.rect.y = player_y
+
     def reset(self):
-        '''отрисовка героя на окне'''
+        '''appearance of sprite on screen'''
         window.blit(self.image, (self.rect.x, self.rect.y))
 
 
 class Player(GameSprite):
-    '''класс главного игрока'''
+    '''Class of main player'''
+
     def update(self):
-        '''метод для управления спрайтом'''
-        keys = key.get_pressed()
-        if keys[K_LEFT] and self.rect.x > 5:
+        '''method of sprite controlling'''
+        keys_pressed = key.get_pressed()
+        if keys_pressed[K_a] and self.rect.x > 1:
             self.rect.x -= self.speed
-        if keys[K_RIGHT] and self.rect.x < win_width - 80:
+        if keys_pressed[K_d] and self.rect.x < win_width - 80:
             self.rect.x += self.speed
+
     def fire(self):
-        '''стрельба'''
-        bullet = Bullet('bullet.png', self.rect.centerx, self.rect.top, 15, 20, -15)
+        '''shooting'''
+        bullet = Bullet('bullet.png', self.rect.centerx, self.rect.top, 15, 20, -15, )
         bullets.add(bullet)
 
 
 class Enemy(GameSprite):
-    '''класс спрайта-врага'''
+    '''enemy class'''
+
     def update(self):
         self.rect.y += self.speed
         global lost
@@ -75,129 +76,120 @@ class Enemy(GameSprite):
             lost += 1
 
 
-class Asteroids(GameSprite):
-    '''класс для астероидов'''
+class Asteroid(GameSprite):
+    '''asteroid class'''
+
     def update(self):
         self.rect.y += self.speed
+        global lost
         if self.rect.y > win_height:
             self.rect.x = randint(30, win_width - 30)
             self.rect.y = 0
 
 
 class Bullet(GameSprite):
-    """класс спрайта-пули"""
+    '''Class of bullets'''
+
     def update(self):
-        """движение пули"""
+        '''movement of bullet'''
         self.rect.y += self.speed
-        '''исчезает, дойдя до края экрана'''
+        '''disappears when goes out of the screen'''
         if self.rect.y < 0:
             self.kill()
 
 
-
-'''создаём спрайты'''
-ship = Player('rocket.png', 5, win_height - 100, 80, 100, 10)
-#player_image, player_x, player_y, size_x, size_y, player_speed
-
+'''creating sprites'''
+ship = Player('rocket.png', 5, win_height - 100, 80, 100, 15)
 monsters = sprite.Group()
-for i in range(1, 6):
+for i in range(1, 15):
     monster = Enemy('ufo.png', randint(80, win_width - 80), -40, 80, 50, randint(1, 5))
     monsters.add(monster)
 
-
 asteroids = sprite.Group()
-for i in range(1, 3):
-    asteroid = Asteroids('asteroid.png', randint(30, win_width - 30), -40, 80, 50, randint(1, 7))
+for i in range(1, 6):
+    asteroid = Asteroid('asteroid.png', randint(30, win_width - 30), -40, 80, 50, randint(1, 3))
     asteroids.add(asteroid)
-
 
 bullets = sprite.Group()
 
-
-'''переменная "игра закончилась"'''
+'''Game Over'''
 finish = False
-'''Основной цикл игры:'''
+
+'''Main cycle of the game'''
 run = True
 
-num_fire = 0  #переменная для подсчёта количества выстрелов
-rel_time = False #флаг, отвечающий за перезарядку
+num_fire = 0  # number of shoots
+rel_time = False  # Reloading
 
 while run:
     for e in event.get():
-        '''нажатие кнопки "закрыть":'''
+        '''Button X on window'''
         if e.type == QUIT:
             run = False
         elif e.type == KEYDOWN:
             if e.key == K_SPACE:
-                '''проверим, сколько выстрелов сделано'''
                 if num_fire < 5 and rel_time == False:
                     num_fire += 1
                     fire_sound.play()
                     ship.fire()
-                if num_fire >= 5 and rel_time == False:
+                if num_fire > 5 and rel_time == False:
                     last_time = timer()
                     rel_time = True
 
     if not finish:
-        '''обновляем фон'''
+        '''updating the back'''
         window.blit(background, (0, 0))
 
-        '''пишем текст на экране'''
-        text = font2.render('Счёт:' + str(score), 1, (255, 255, 255))
-        window.blit(text, (10, 20))
+        '''text on the screen'''
+        text = font2.render('KILLED:' + str(score), 1, (255, 255, 255))
+        window.blit(text, (20, 10))
+        textlose = font2.render('MISSED:' + str(lost), 1, (255, 255, 255))
+        window.blit(textlose, (10, 50))
 
-        text_lose = font2.render('Пропущено:' + str(lost), 1, (255, 255, 255))
-        window.blit(text_lose, (10, 50))
-
-        '''движения спрайтов'''
+        '''Movement of sprites'''
         ship.update()
         monsters.update()
         bullets.update()
         asteroids.update()
-        '''обновляем местоположение спрайтов'''
+        '''Updating the location of sprites'''
         ship.reset()
         monsters.draw(window)
         bullets.draw(window)
         asteroids.draw(window)
 
-        '''перезарядка'''
+        '''reloading'''
         if rel_time == True:
             now_time = timer()
             if now_time - last_time < 3:
-                '''если не прошло 3 секунды, выводим сообщение о перезарядке'''
-                reload = font2.render('Подождите, перезарядка...', 1, (150, 0, 0))
+                reload = font2.render('Wait, reloading..', 1, (150, 0, 0))
                 window.blit(reload, (260, 460))
             else:
                 num_fire = 0
                 rel_time = False
 
-
-        '''проверка столкновения пули и монстров'''
+        '''checking if bullet touches the monster'''
         collides = sprite.groupcollide(monsters, bullets, True, True)
         for c in collides:
             score += 1
             monster = Enemy('ufo.png', randint(80, win_width - 80), -40, 80, 50, randint(1, 5))
             monsters.add(monster)
 
+        '''if player touches monsters -1 HEALTH'''
 
-        '''если спрайт коснулся врага, уменьшаем жизнь'''
         if sprite.spritecollide(ship, monsters, False) or sprite.spritecollide(ship, asteroids, False):
             sprite.spritecollide(ship, monsters, True)
             sprite.spritecollide(ship, asteroids, True)
             life -= 1
 
-
-        '''поражение'''
+        '''Defeat'''
         if life == 0 or lost >= max_lost:
             finish = True
             window.blit(lose, (200, 200))
 
-
-        '''победа'''
-        if score >= goal:
+        '''Victory'''
+        if sprite.spritecollide(ship, monsters, False) or lost >= max_lost:
             finish = True
             window.blit(win, (200, 200))
-
         if life == 3:
             life_color = (0, 150, 0)
         if life == 2:
@@ -207,7 +199,6 @@ while run:
 
         text_life = font1.render(str(life), 1, life_color)
         window.blit(text_life, (650, 10))
-
 
         display.update()
     time.delay(50)

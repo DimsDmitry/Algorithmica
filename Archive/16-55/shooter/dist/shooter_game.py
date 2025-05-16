@@ -21,10 +21,10 @@ fire_sound = mixer.Sound('fire.ogg')
 
 '''шрифты и надписи'''
 font.init()
-font1 = font.SysFont('Arial', 80)
+font1 = font.SysFont(None, 80)
 win = font1.render('ПОБЕДА', True, (255, 255, 255))
 lose = font1.render('ПОРАЖЕНИЕ', True, (180, 0, 0))
-font2 = font.SysFont('Arial', 36)
+font2 = font.SysFont(None, 36)
 
 score = 0  # сбито кораблей
 lost = 0  # пропущено кораблей
